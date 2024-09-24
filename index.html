@@ -34,6 +34,24 @@
         .question:last-child {
             border-bottom: none; /* Remove border from last question */
         }
+          #submitQuiz {
+            display: block; /* Makes it a block-level element */
+            width: 200px; /* Set a width */
+            padding: 10px 20px; /* Button padding */
+            margin: 20px auto; /* Center horizontally with auto margin */
+            background-color: #ffcc00; /* Button color */
+            color: #1c1c1c; /* Dark text */
+            border: none; /* Remove borders */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 18px; /* Increase font size */
+            font-weight: bold; /* Bold text */
+            cursor: pointer; /* Pointer cursor on hover */
+            text-align: center;
+        }
+        #submitQuiz:hover {
+            background-color: #520485; /* Purple on hover */
+            color: #fff
+        }
         .slider {
             -webkit-appearance: none;
             width: 100%;
@@ -82,7 +100,8 @@
             cursor: pointer;
         }
         #downloadPngButton:hover {
-            background-color: #ffc107; /* Button hover color */
+            background-color: #520485; /* Button hover color */
+            color: #fff
         }
         .likert-scale {
             display: flex;
@@ -112,7 +131,7 @@ a:visited {
     </style>
 </head>
 <body>
-    <img src="images/LogoFinalGems.png" alt="Decoration Left" class="fixed-image">
+    <img src="images/NoWords.png" alt="Decoration Left" class="fixed-image">
 
     <div class="container">
         <h1>GNS Theory Quiz</h1>
