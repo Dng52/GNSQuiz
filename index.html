@@ -67,8 +67,10 @@
             width: 300px;
             height: 300px;
             margin: 20px auto;
+            background: #fff; /* White background for the chart */
+            border-radius: 10px; /* Round the corners of the chart */
         }
-        #downloadPdfButton {
+        #downloadPngButton {
             display: none;
             margin-top: 20px;
             background-color: #ffcc00; /* Button color */
@@ -78,7 +80,7 @@
             color: #1c1c1c; /* Dark text for button */
             cursor: pointer;
         }
-        #downloadPdfButton:hover {
+        #downloadPngButton:hover {
             background-color: #ffc107; /* Button hover color */
         }
         .likert-scale {
@@ -87,9 +89,23 @@
             font-size: 14px;
             margin-top: 5px; /* Space between slider and scale */
         }
+        /* Decoration Styles */
+        .decoration-left, .decoration-right {
+            position: absolute;
+            top: 50px;
+            width: 150px;
+        }
+        .decoration-left {
+            left: -170px; /* Position the image to the left of the container */
+        }
+        .decoration-right {
+            right: -170px; /* Position the image to the right of the container */
+        }
     </style>
 </head>
 <body>
+    <img src="images/NoWords.png" alt="Decoration Left" class="decoration-left">
+
     <div class="container">
         <h1>GNS Theory Quiz</h1>
         <form id="quizForm">
@@ -203,7 +219,7 @@
             </div>
             <div class="question" data-attribute="gamism">
                 <p>A wizard should be able to level up, gain new spells, and not have to explain where they learned it from.</p>
-                <input type="range" min="1" max="5" value="3" class="slider" id="q12">
+                <input type="range" min="1" max="5" value="3" class="slider" id="q13">
                 <div class="likert-scale">
                     <span>Strongly Disagree</span>
                     <span>Neutral</span>
@@ -212,7 +228,7 @@
             </div>
             <div class="question" data-attribute="narrativism">
                 <p>If players are uninterested in politics or economy in a campaign, those things simply won't impact or be impacted by their decisions.</p>
-                <input type="range" min="1" max="5" value="3" class="slider" id="q12">
+                <input type="range" min="1" max="5" value="3" class="slider" id="q14">
                 <div class="likert-scale">
                     <span>Strongly Disagree</span>
                     <span>Neutral</span>
@@ -221,7 +237,7 @@
             </div>
             <div class="question" data-attribute="simulationism">
                 <p>I often wonder and/or factor in how magic would impact a medieval society and how monsters impact ecosystems.</p>
-                <input type="range" min="1" max="5" value="3" class="slider" id="q12">
+                <input type="range" min="1" max="5" value="3" class="slider" id="q15">
                 <div class="likert-scale">
                     <span>Strongly Disagree</span>
                     <span>Neutral</span>
@@ -230,12 +246,11 @@
             </div>
         </form>
         <button id="submitQuiz">Submit</button>
-        <button id="downloadPdfButton">Download PDF</button>
-        <div class="radial-chart" id="radialChart"></div>
+        <button id="downloadPngButton">Download Chart as PNG</button>
+        <canvas class="radial-chart" id="radialChart"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
         document.getElementById('submitQuiz').addEventListener('click', function() {
             const form = document.getElementById('quizForm');
@@ -252,20 +267,26 @@
             });
 
             createChart(data);
-            document.getElementById('downloadPdfButton').style.display = 'block';
+            document.getElementById('downloadPngButton').style.display = 'block';
         });
 
         function createChart(data) {
-            const ctx = document.getElementById('radialChart').getContext('2d');
+            const canvas = document.getElementById('radialChart');
+            const ctx = canvas.getContext('2d');
+
+            // Add a white background to the canvas before drawing the chart
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
             const total = Object.keys(data).length;
             const scores = Object.values(data).map(score => score / total); // Normalize scores
 
-            const chart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'radar',
                 data: {
                     labels: ['Gamism', 'Narrativism', 'Simulationism'],
                     datasets: [{
-                        label: 'Scores',
+                        label: '',
                         data: scores,
                         backgroundColor: 'rgba(255, 204, 0, 0.2)',
                         borderColor: 'rgba(255, 204, 0, 1)',
@@ -278,20 +299,38 @@
                             beginAtZero: true,
                             ticks: {
                                 stepSize: 1,
-                                max: 5 // Adjust based on your scale
+                                max: 5,
+                                min: 1 // Adjust for better visual representation
+                            },
+                            grid: {
+                                circular: true
                             }
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.4
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
                         }
                     }
                 }
             });
         }
 
-        document.getElementById('downloadPdfButton').addEventListener('click', function() {
+        // PNG Download Functionality
+        document.getElementById('downloadPngButton').addEventListener('click', function() {
             const canvas = document.getElementById('radialChart');
-            const pdf = new jsPDF();
-            const imgData = canvas.toDataURL('image/png');
-            pdf.addImage(imgData, 'PNG', 10, 10);
-            pdf.save('gns_quiz_results.pdf');
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png'); // Generate PNG data
+            link.download = 'GNS_Theory_Quiz_Chart.png'; // Set filename
+            link.click(); // Trigger download
         });
     </script>
 </body>
