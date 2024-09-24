@@ -11,6 +11,7 @@
             padding: 20px;
             background-color: #1c1c1c; /* Dark background */
             color: #fff; /* White text */
+            
         }
         .container {
             max-width: 800px;
@@ -89,25 +90,33 @@
             font-size: 14px;
             margin-top: 5px; /* Space between slider and scale */
         }
-        /* Decoration Styles */
-        .decoration-left, .decoration-right {
-            position: absolute;
-            top: 3500px;
-            width: 3500px;
+        .fixed-image {
+            position: fixed;
+            top: -25px; /* Adjust this to move image down or up */
+            left: -40px; /* Adjust this to move image left or right */
+            width: 200px; /* Adjust width for responsiveness */
+            height: auto;
+            z-index: 1; /* Ensure it stays on top */
         }
-        .decoration-left {
-            left: -170px; /* Position the image to the left of the container */
-        }
-        .decoration-right {
-            right: -170px; /* Position the image to the right of the container */
-        }
+        a:link {
+  color: #ffcc00;
+  background-color: transparent;
+  text-decoration:underline;
+}
+
+a:visited {
+  color: #ffcc00;
+  background-color: transparent;
+  text-decoration: underline;
+}
     </style>
 </head>
 <body>
-    <img src="images/NoWords.png" alt="Decoration Left" class="decoration-left">
+    <img src="images/NoWords.png" alt="Decoration Left" class="fixed-image">
 
     <div class="container">
         <h1>GNS Theory Quiz</h1>
+        <p style="text-align:center">A quiz by <a href="https://www.youtube.com/@thebountifulmimic">The Bountiful Mimic</a> to determine your play style according to GNS Theory</p>
         <form id="quizForm">
             <div class="question" data-attribute="gamism">
                 <p>During a tense battle, I would prefer to choose a tactical advantage over a decision that makes sense for my character’s personality.</p>
@@ -243,6 +252,10 @@
                     <span>Neutral</span>
                     <span>Strongly Agree</span>
                 </div>
+            </div>
+
+                <p>Check me out on YouTube by clicking below: </p> <a href="https://www.youtube.com/@thebountifulmimic">The Bountiful Mimic</a>
+
             </div>
         </form>
         <button id="submitQuiz">Submit</button>
