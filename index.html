@@ -9,21 +9,59 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #1c1c1c; /* Dark background */
+            color: #fff; /* White text */
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: #fff;
+            background: #2c2c2c; /* Darker container */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
         h1 {
             text-align: center;
+            color: #ffcc00; /* Highlighted title color */
         }
         .question {
-            margin-bottom: 20px;
+            margin-bottom: 30px; /* Increased spacing */
+            font-size: 18px; /* Larger question text */
+            padding: 10px 0; /* Padding for questions */
+            border-bottom: 1px solid #444; /* Bottom border for separation */
+        }
+        .question:last-child {
+            border-bottom: none; /* Remove border from last question */
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: #555; /* Slider track color */
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            margin-top: 10px;
+        }
+        .slider:hover {
+            opacity: 1; /* Full opacity on hover */
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #ffcc00; /* Thumb color */
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #ffcc00; /* Thumb color */
+            border-radius: 50%;
+            cursor: pointer;
         }
         .radial-chart {
             width: 300px;
@@ -33,6 +71,21 @@
         #downloadPdfButton {
             display: none;
             margin-top: 20px;
+            background-color: #ffcc00; /* Button color */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #1c1c1c; /* Dark text for button */
+            cursor: pointer;
+        }
+        #downloadPdfButton:hover {
+            background-color: #ffc107; /* Button hover color */
+        }
+        .likert-scale {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 5px; /* Space between slider and scale */
         }
     </style>
 </head>
@@ -42,122 +95,204 @@
         <form id="quizForm">
             <div class="question" data-attribute="gamism">
                 <p>During a tense battle, I would prefer to choose a tactical advantage over a decision that makes sense for my character’s personality.</p>
-                <label><input type="radio" name="q1" value="1"> Strongly Disagree</label>
-                <label><input type="radio" name="q1" value="2"> Disagree</label>
-                <label><input type="radio" name="q1" value="3"> Neutral</label>
-                <label><input type="radio" name="q1" value="4"> Agree</label>
-                <label><input type="radio" name="q1" value="5"> Strongly Agree</label>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q1">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
             </div>
-            
             <div class="question" data-attribute="narrativism">
                 <p>If my character had the option to make a dramatic sacrifice for the sake of the story, I would choose that option even if it made my character weaker in the long run.</p>
-                <label><input type="radio" name="q2" value="1"> Strongly Disagree</label>
-                <label><input type="radio" name="q2" value="2"> Disagree</label>
-                <label><input type="radio" name="q2" value="3"> Neutral</label>
-                <label><input type="radio" name="q2" value="4"> Agree</label>
-                <label><input type="radio" name="q2" value="5"> Strongly Agree</label>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q2">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
             </div>
-
+            <div class="question" data-attribute="gamism">
+                <p>Placing fun, in depth puzzles in dungeons or hideouts is more important than not including them because it wouldn't make sense how they got there.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q3">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="narrativism">
+                <p>I enjoy using my character’s backstory or motivations to influence how I play the game, even when it doesn’t optimize my chances of a "positive outcome".</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q4">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
             <div class="question" data-attribute="simulationism">
-                <p>When my character interacts with the game world, I value choices that stay true to the world's rules and lore over decisions that give immediate benefits.</p>
-                <label><input type="radio" name="q3" value="1"> Strongly Disagree</label>
-                <label><input type="radio" name="q3" value="2"> Disagree</label>
-                <label><input type="radio" name="q3" value="3"> Neutral</label>
-                <label><input type="radio" name="q3" value="4"> Agree</label>
-                <label><input type="radio" name="q3" value="5"> Strongly Agree</label>
+                <p>If there's no good explanation for aberrations, devils, and monstrosities to be together in the same fight, then I wouldn't put them there, even if it's mechanically more interesting.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q5">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
             </div>
-
-            <!-- Add more questions here in the same format -->
-
-            <button type="button" onclick="calculateResults()">Submit</button>
-            <button type="button" id="downloadPdfButton" onclick="downloadPdf()">Download Results as PDF</button>
+            <div class="question" data-attribute="simulationism">
+                <p>The party finds a creative way to bypass a major plot event. This is acceptable and the game should continue without revisiting that plot event.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q6">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="narrativism">
+                <p>Your players’ actions have unexpectedly changed a major part of the story. You adjust the campaign’s direction to make their choices central to the new narrative.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q7">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="simulationism">
+                <p>If a player’s action makes sense within the established lore, but breaks game balance, you still allow it to preserve the world’s consistency.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q8">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="gamism">
+                <p>A monster's health and abilities are important to keep consistent. No increasing or decreasing HP to prolong or shorten a battle.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q9">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="narrativism">
+                <p>I enjoy games where the most important thing is developing a compelling and dramatic story, even at the cost of following game rules exactly.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q10">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="gamism">
+                <p>Even if 1 player character is the son of a God, another is the Chosen One, and the last is a farmer, I prefer when the game mechanics are balanced between them.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q11">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="simulationism">
+                <p>There is 10,000 gold found in a dragon's hoard. Figuring out how to carry most of it is an important part of the equation. </p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q12">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="gamism">
+                <p>A wizard should be able to level up, gain new spells, and not have to explain where they learned it from.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q12">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="narrativism">
+                <p>If players are uninterested in politics or economy in a campaign, those things simply won't impact or be impacted by their decisions.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q12">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
+            <div class="question" data-attribute="simulationism">
+                <p>I often wonder and/or factor in how magic would impact a medieval society and how monsters impact ecosystems.</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="q12">
+                <div class="likert-scale">
+                    <span>Strongly Disagree</span>
+                    <span>Neutral</span>
+                    <span>Strongly Agree</span>
+                </div>
+            </div>
         </form>
-
-        <canvas id="radialChart" class="radial-chart"></canvas>
+        <button id="submitQuiz">Submit</button>
+        <button id="downloadPdfButton">Download PDF</button>
+        <div class="radial-chart" id="radialChart"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-        const quizForm = document.getElementById('quizForm');
+        document.getElementById('submitQuiz').addEventListener('click', function() {
+            const form = document.getElementById('quizForm');
+            const data = {};
+            const questions = form.querySelectorAll('.question');
 
-        function calculateResults() {
-            let gamism = 0;
-            let narrativism = 0;
-            let simulationism = 0;
-            const questions = document.querySelectorAll('.question');
-
-            questions.forEach((question) => {
+            questions.forEach(question => {
                 const attribute = question.getAttribute('data-attribute');
-                const answer = parseInt(question.querySelector('input[type="radio"]:checked')?.value || 0);
-
-                if (attribute === 'gamism') gamism += answer;
-                if (attribute === 'narrativism') narrativism += answer;
-                if (attribute === 'simulationism') simulationism += answer;
+                const slider = question.querySelector('.slider');
+                if (!data[attribute]) {
+                    data[attribute] = 0;
+                }
+                data[attribute] += parseInt(slider.value);
             });
 
-            displayChart(gamism, narrativism, simulationism);
+            createChart(data);
             document.getElementById('downloadPdfButton').style.display = 'block';
-        }
+        });
 
-        function displayChart(gamism, narrativism, simulationism) {
+        function createChart(data) {
             const ctx = document.getElementById('radialChart').getContext('2d');
-            const data = {
-                labels: ['Gamism', 'Narrativism', 'Simulationism'],
-                datasets: [{
-                    label: 'GNS Theory',
-                    data: [gamism, narrativism, simulationism],
-                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                    borderColor: 'rgba(0, 123, 255, 1)',
-                    borderWidth: 2,
-                }]
-            };
-            const options = {
-                scale: {
-                    ticks: { beginAtZero: true, max: 50 }
-                }
-            };
-            new Chart(ctx, {
+            const total = Object.keys(data).length;
+            const scores = Object.values(data).map(score => score / total); // Normalize scores
+
+            const chart = new Chart(ctx, {
                 type: 'radar',
-                data: data,
-                options: options
+                data: {
+                    labels: ['Gamism', 'Narrativism', 'Simulationism'],
+                    datasets: [{
+                        label: 'Scores',
+                        data: scores,
+                        backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                        borderColor: 'rgba(255, 204, 0, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                max: 5 // Adjust based on your scale
+                            }
+                        }
+                    }
+                }
             });
         }
 
-        function downloadPdf() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            doc.setFontSize(18);
-            doc.text("GNS Theory Quiz Results", 20, 20);
-
-            const questions = document.querySelectorAll('.question');
-            let gamismScore = 0;
-            let narrativismScore = 0;
-            let simulationismScore = 0;
-
-            questions.forEach((question) => {
-                const attribute = question.getAttribute('data-attribute');
-                const answer = parseInt(question.querySelector('input[type="radio"]:checked')?.value || 0);
-
-                if (attribute === 'gamism') {
-                    gamismScore += answer;
-                }
-                if (attribute === 'narrativism') {
-                    narrativismScore += answer;
-                }
-                if (attribute === 'simulationism') {
-                    simulationismScore += answer;
-                }
-            });
-
-            doc.setFontSize(12);
-            doc.text(`Gamism Score: ${gamismScore}`, 20, 40);
-            doc.text(`Narrativism Score: ${narrativismScore}`, 20, 50);
-            doc.text(`Simulationism Score: ${simulationismScore}`, 20, 60);
-
-            doc.save("gns_theory_results.pdf");
-        }
+        document.getElementById('downloadPdfButton').addEventListener('click', function() {
+            const canvas = document.getElementById('radialChart');
+            const pdf = new jsPDF();
+            const imgData = canvas.toDataURL('image/png');
+            pdf.addImage(imgData, 'PNG', 10, 10);
+            pdf.save('gns_quiz_results.pdf');
+        });
     </script>
 </body>
 </html>
